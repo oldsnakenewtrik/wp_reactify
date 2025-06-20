@@ -1,0 +1,80 @@
+{
+    "name": "reactifywp/reactifywp",
+    "description": "Democratise React on WordPress: one-click deployment of any compiled React SPA/MPA without touching the theme or server.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Your Name",
+            "email": "your.email@example.com"
+        }
+    ],
+    "keywords": [
+        "wordpress",
+        "plugin",
+        "react",
+        "spa",
+        "javascript",
+        "frontend"
+    ],
+    "homepage": "https://github.com/your-username/reactifywp",
+    "support": {
+        "issues": "https://github.com/your-username/reactifywp/issues",
+        "source": "https://github.com/your-username/reactifywp"
+    },
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6",
+        "phpstan/phpstan": "^1.10",
+        "squizlabs/php_codesniffer": "^3.7",
+        "wp-coding-standards/wpcs": "^3.0",
+        "phpstan/extension-installer": "^1.3",
+        "szepeviktor/phpstan-wordpress": "^1.3",
+        "php-stubs/wordpress-stubs": "^6.5",
+        "brain/monkey": "^2.6",
+        "mockery/mockery": "^1.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "ReactifyWP\\": "inc/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ReactifyWP\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test:coverage": "phpunit --coverage-html coverage",
+        "phpstan": "phpstan analyse",
+        "phpcs": "phpcs",
+        "phpcbf": "phpcbf",
+        "lint": [
+            "@phpstan",
+            "@phpcs"
+        ],
+        "fix": "@phpcbf",
+        "post-install-cmd": [
+            "@setup-phpcs"
+        ],
+        "post-update-cmd": [
+            "@setup-phpcs"
+        ],
+        "setup-phpcs": [
+            "phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true
+        },
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

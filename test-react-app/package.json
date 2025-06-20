@@ -1,0 +1,21 @@
+{
+  "name": "reactifywp-test-app",
+  "version": "1.0.0",
+  "description": "A simple test React application for ReactifyWP",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve -s .",
+    "build": "echo 'No build process needed for this simple app'"
+  },
+  "keywords": [
+    "react",
+    "wordpress",
+    "reactifywp",
+    "test"
+  ],
+  "author": "ReactifyWP",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.0.0"
+  }
+}

@@ -1,0 +1,436 @@
+/**
+ * ReactifyWP Upload Interface Styles
+ */
+
+/* Upload Container */
+.reactifywp-upload-container {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+/* Dropzone */
+.reactifywp-dropzone {
+    border: 2px dashed #c3c4c7;
+    border-radius: 8px;
+    padding: 40px 20px;
+    text-align: center;
+    background: #f9f9f9;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.reactifywp-dropzone:hover,
+.reactifywp-dropzone.dragover {
+    border-color: #0073aa;
+    background: #f0f8ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 115, 170, 0.1);
+}
+
+.reactifywp-dropzone-icon {
+    font-size: 48px;
+    color: #c3c4c7;
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+.reactifywp-dropzone:hover .reactifywp-dropzone-icon,
+.reactifywp-dropzone.dragover .reactifywp-dropzone-icon {
+    color: #0073aa;
+}
+
+.reactifywp-dropzone-text {
+    font-size: 16px;
+    color: #50575e;
+    margin-bottom: 10px;
+}
+
+.reactifywp-dropzone-subtext {
+    font-size: 14px;
+    color: #8c8f94;
+}
+
+.reactifywp-dropzone.dragover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 115, 170, 0.05);
+    border-radius: 6px;
+}
+
+/* File Input */
+.reactifywp-file-input {
+    display: none;
+}
+
+/* Upload Controls */
+.reactifywp-upload-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    padding: 15px;
+    background: #f6f7f7;
+    border-radius: 4px;
+}
+
+.reactifywp-upload-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.reactifywp-upload-stats {
+    font-size: 14px;
+    color: #50575e;
+}
+
+/* Global Progress */
+.reactifywp-global-progress {
+    margin: 15px 0;
+}
+
+.reactifywp-global-progress .progress-label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1d2327;
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e1e1e1;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0073aa, #005a87);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: progressShine 2s infinite;
+}
+
+@keyframes progressShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.progress-text {
+    font-size: 12px;
+    color: #50575e;
+    margin-top: 4px;
+    text-align: center;
+}
+
+/* Upload Queue */
+.reactifywp-upload-queue {
+    margin-top: 20px;
+}
+
+.reactifywp-upload-queue h3 {
+    margin: 0 0 15px 0;
+    font-size: 16px;
+    color: #1d2327;
+}
+
+/* Upload Item */
+.upload-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    background: #fff;
+    transition: all 0.3s ease;
+}
+
+.upload-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.upload-item.uploading {
+    border-color: #0073aa;
+    background: #f0f8ff;
+}
+
+.upload-item.completed {
+    border-color: #00a32a;
+    background: #f0fff4;
+}
+
+.upload-item.error {
+    border-color: #d63638;
+    background: #fff5f5;
+}
+
+.upload-item.cancelled {
+    border-color: #dba617;
+    background: #fffbf0;
+    opacity: 0.7;
+}
+
+/* Upload Info */
+.upload-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.upload-filename {
+    font-weight: 600;
+    color: #1d2327;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.upload-filesize {
+    font-size: 12px;
+    color: #8c8f94;
+}
+
+/* Upload Progress */
+.upload-progress {
+    flex: 2;
+    margin: 0 20px;
+    min-width: 200px;
+}
+
+.upload-progress .progress-bar {
+    margin-bottom: 4px;
+}
+
+/* Upload Status */
+.upload-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 120px;
+}
+
+.status-text {
+    font-size: 12px;
+    color: #50575e;
+    white-space: nowrap;
+}
+
+.upload-item.uploading .status-text {
+    color: #0073aa;
+}
+
+.upload-item.completed .status-text {
+    color: #00a32a;
+}
+
+.upload-item.error .status-text {
+    color: #d63638;
+}
+
+.upload-item.cancelled .status-text {
+    color: #dba617;
+}
+
+/* Upload Actions */
+.upload-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.upload-actions button {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background 0.2s ease;
+}
+
+.upload-actions button:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.upload-actions .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+.reactifywp-cancel-upload .dashicons {
+    color: #d63638;
+}
+
+.reactifywp-retry-upload .dashicons {
+    color: #0073aa;
+}
+
+.upload-item.completed .dashicons {
+    color: #00a32a;
+}
+
+.upload-item.cancelled .dashicons {
+    color: #8c8f94;
+}
+
+/* Empty State */
+.reactifywp-empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #8c8f94;
+}
+
+.reactifywp-empty-state .dashicons {
+    font-size: 48px;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+/* Messages */
+.reactifywp-messages {
+    margin: 15px 0;
+}
+
+.reactifywp-messages .notice {
+    margin: 5px 0;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 782px) {
+    .reactifywp-upload-controls {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .reactifywp-upload-actions {
+        justify-content: center;
+    }
+    
+    .upload-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .upload-progress {
+        margin: 0;
+        min-width: auto;
+    }
+    
+    .upload-status {
+        justify-content: space-between;
+        min-width: auto;
+    }
+    
+    .reactifywp-dropzone {
+        padding: 30px 15px;
+        min-height: 100px;
+    }
+    
+    .reactifywp-dropzone-icon {
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+}
+
+/* Animation for new items */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.upload-item {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Loading spinner for upload button */
+.reactifywp-upload-btn.loading::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Accessibility improvements */
+.upload-actions button:focus {
+    outline: 2px solid #0073aa;
+    outline-offset: 2px;
+}
+
+.reactifywp-dropzone:focus {
+    outline: 2px solid #0073aa;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .reactifywp-dropzone {
+        border-color: #000;
+    }
+    
+    .progress-fill {
+        background: #000;
+    }
+    
+    .upload-item.error {
+        border-color: #000;
+        background: #fff;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .upload-item,
+    .progress-fill,
+    .reactifywp-dropzone {
+        transition: none;
+        animation: none;
+    }
+    
+    .progress-fill::after {
+        display: none;
+    }
+}

@@ -1,0 +1,54 @@
+# Development files
+.git/
+.github/
+node_modules/
+vendor/
+tests/
+coverage/
+.phpunit.cache/
+
+# Configuration files
+.eslintrc.js
+.prettierrc.js
+.stylelintrc.js
+phpstan.neon
+phpcs.xml
+phpunit.xml
+webpack.config.js
+composer.json
+composer.lock
+package.json
+package-lock.json
+
+# Build tools
+.gitignore
+.deployignore
+.editorconfig
+
+# Documentation
+README.md
+CONTRIBUTING.md
+CHANGELOG.md
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+
+# Source assets (keep only built assets)
+assets/js/
+assets/css/
+!assets/dist/

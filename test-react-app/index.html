@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test React App</title>
+    <style>
+        .test-react-app {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .test-react-app h1 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+        }
+        .test-react-app p {
+            margin: 0 0 15px 0;
+            opacity: 0.9;
+        }
+        .test-react-app .status {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .test-react-app .counter {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .test-react-app button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: background-color 0.2s;
+        }
+        .test-react-app button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="test-react-app">
+            <h1>🚀 ReactifyWP Test App</h1>
+            <p>This is a simple test React application for ReactifyWP!</p>
+            
+            <div class="status">
+                <strong>Status:</strong> <span id="status">Loading...</span>
+            </div>
+            
+            <div class="counter">
+                <p><strong>Counter:</strong> <span id="counter">0</span></p>
+                <button onclick="incrementCounter()">+</button>
+                <button onclick="decrementCounter()">-</button>
+                <button onclick="resetCounter()">Reset</button>
+            </div>
+            
+            <div class="status">
+                <strong>Loaded at:</strong> <span id="timestamp"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple counter functionality
+        let counter = 0;
+        
+        function updateCounter() {
+            document.getElementById('counter').textContent = counter;
+        }
+        
+        function incrementCounter() {
+            counter++;
+            updateCounter();
+        }
+        
+        function decrementCounter() {
+            counter--;
+            updateCounter();
+        }
+        
+        function resetCounter() {
+            counter = 0;
+            updateCounter();
+        }
+        
+        // Initialize the app
+        function initApp() {
+            document.getElementById('status').textContent = 'Ready!';
+            document.getElementById('timestamp').textContent = new Date().toLocaleString();
+            
+            // Simulate some React-like behavior
+            console.log('ReactifyWP Test App initialized!');
+            
+            // If WordPress bridge is available, use it
+            if (window.ReactifyWP && window.ReactifyWP.WPBridge) {
+                console.log('WordPress Bridge detected!');
+                const user = window.ReactifyWP.WPBridge.getCurrentUser();
+                if (user && user.logged_in) {
+                    document.getElementById('status').textContent = `Ready! (Logged in as ${user.display_name})`;
+                }
+            }
+        }
+        
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
+    </script>
+</body>
+</html>

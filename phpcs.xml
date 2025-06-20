@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<ruleset name="ReactifyWP">
+    <description>ReactifyWP PHP Coding Standards</description>
+
+    <!-- Files to check -->
+    <file>reactifywp.php</file>
+    <file>inc/</file>
+
+    <!-- Exclude patterns -->
+    <exclude-pattern>vendor/</exclude-pattern>
+    <exclude-pattern>tests/</exclude-pattern>
+    <exclude-pattern>node_modules/</exclude-pattern>
+    <exclude-pattern>assets/</exclude-pattern>
+
+    <!-- Arguments -->
+    <arg value="sp"/> <!-- Show sniff and progress -->
+    <arg name="basepath" value="./"/> <!-- Strip the file paths down to the relevant bit -->
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+    <arg name="parallel" value="8"/> <!-- Enables parallel processing when available for faster results -->
+
+    <!-- Rules: Check PHP version compatibility -->
+    <config name="minimum_supported_wp_version" value="6.5"/>
+    <config name="testVersion" value="7.4-"/>
+
+    <!-- Rules: WordPress Coding Standards -->
+    <rule ref="WordPress">
+        <!-- Exclude rules that conflict with modern PHP practices -->
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+        
+        <!-- Allow short array syntax -->
+        <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+        
+        <!-- Allow modern PHP features -->
+        <exclude name="WordPress.PHP.DisallowShortTernary"/>
+        
+        <!-- Exclude VIP-specific rules -->
+        <exclude name="WordPress.VIP"/>
+        
+        <!-- Allow custom hook names -->
+        <exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores"/>
+    </rule>
+
+    <!-- Rules: PSR-12 Extended Coding Style -->
+    <rule ref="PSR12">
+        <!-- Allow WordPress-style class file naming -->
+        <exclude name="PSR1.Files.SideEffects.FoundWithSymbols"/>
+    </rule>
+
+    <!-- Rules: Additional WordPress-specific rules -->
+    <rule ref="WordPress.Security"/>
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <property name="text_domain" type="array">
+                <element value="reactifywp"/>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- Rules: Documentation -->
+    <rule ref="WordPress.Commenting.FunctionComment"/>
+    <rule ref="WordPress.Commenting.ClassComment"/>
+    <rule ref="WordPress.Commenting.FileComment"/>
+
+    <!-- Rules: Security -->
+    <rule ref="WordPress.Security.EscapeOutput"/>
+    <rule ref="WordPress.Security.NonceVerification"/>
+    <rule ref="WordPress.Security.ValidatedSanitizedInput"/>
+
+    <!-- Rules: Performance -->
+    <rule ref="WordPress.DB.DirectDatabaseQuery"/>
+    <rule ref="WordPress.DB.SlowDBQuery"/>
+
+    <!-- Custom rules for this project -->
+    <rule ref="Generic.Commenting.DocComment"/>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+    <rule ref="Generic.PHP.RequireStrictTypes"/>
+
+    <!-- Line length -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="150"/>
+        </properties>
+    </rule>
+
+    <!-- Indentation -->
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <properties>
+            <property name="indent" value="4"/>
+            <property name="tabIndent" value="false"/>
+        </properties>
+    </rule>
+
+    <!-- Namespace and use statements -->
+    <rule ref="PSR2.Namespaces.NamespaceDeclaration"/>
+    <rule ref="PSR2.Namespaces.UseDeclaration"/>
+
+    <!-- Method and function naming -->
+    <rule ref="PSR1.Methods.CamelCapsMethodName"/>
+
+    <!-- Class constants -->
+    <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+
+    <!-- Exclude specific files from certain rules -->
+    <rule ref="WordPress.Files.FileName.InvalidClassFileName">
+        <exclude-pattern>reactifywp.php</exclude-pattern>
+    </rule>
+
+    <!-- Allow plugin header in main file -->
+    <rule ref="Squiz.Commenting.FileComment.Missing">
+        <exclude-pattern>reactifywp.php</exclude-pattern>
+    </rule>
+</ruleset>

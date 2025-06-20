@@ -1,0 +1,699 @@
+/**
+ * ReactifyWP Admin Styles
+ */
+
+/* Admin Container */
+.reactifywp-admin-container {
+    max-width: 1200px;
+}
+
+/* Section Styling */
+.reactifywp-upload-section,
+.reactifywp-projects-section,
+.reactifywp-settings-section,
+.reactifywp-help-section {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.reactifywp-upload-section h2,
+.reactifywp-projects-section h2,
+.reactifywp-settings-section h2,
+.reactifywp-help-section h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Drag and Drop Upload */
+.reactifywp-upload-dropzone {
+    border: 2px dashed #ccd0d4;
+    border-radius: 8px;
+    padding: 60px 20px;
+    text-align: center;
+    background: #fafafa;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.reactifywp-upload-dropzone:hover,
+.reactifywp-upload-dropzone.dragover {
+    border-color: #0073aa;
+    background: #f0f8ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 115, 170, 0.1);
+}
+
+.reactifywp-dropzone-content .dashicons {
+    font-size: 64px;
+    color: #ccd0d4;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+}
+
+.reactifywp-upload-dropzone:hover .dashicons,
+.reactifywp-upload-dropzone.dragover .dashicons {
+    color: #0073aa;
+}
+
+.reactifywp-dropzone-content .upload-instructions {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #23282d;
+    font-weight: 500;
+}
+
+.reactifywp-dropzone-content .upload-note {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+/* Upload Progress */
+.reactifywp-upload-progress {
+    margin: 20px 0;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+}
+
+.reactifywp-progress {
+    width: 100%;
+    height: 24px;
+    background: #f1f1f1;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 15px 0;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.reactifywp-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #0073aa, #005a87);
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 12px;
+    position: relative;
+}
+
+.reactifywp-progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg,
+        transparent 35%,
+        rgba(255, 255, 255, 0.2) 35%,
+        rgba(255, 255, 255, 0.2) 65%,
+        transparent 65%);
+    background-size: 20px 20px;
+    animation: progress-stripes 1s linear infinite;
+}
+
+@keyframes progress-stripes {
+    0% { background-position: 0 0; }
+    100% { background-position: 20px 0; }
+}
+
+.reactifywp-progress-text {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+/* Upload Form */
+#reactifywp-upload-form .form-table th {
+    width: 200px;
+    padding: 15px 10px 15px 0;
+}
+
+#reactifywp-upload-form .form-table td {
+    padding: 15px 10px;
+}
+
+#reactifywp-upload-form .regular-text {
+    width: 300px;
+}
+
+#reactifywp-upload-form .description {
+    margin-top: 5px;
+    font-style: italic;
+    color: #666;
+}
+
+#reactifywp-upload-form .submit {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+#reactifywp-upload-form .spinner {
+    float: none;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+/* Projects Header */
+.reactifywp-projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.reactifywp-projects-header h2 {
+    margin: 0;
+    flex: 1;
+}
+
+.reactifywp-projects-controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.reactifywp-search-filter {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.reactifywp-search-filter input,
+.reactifywp-search-filter select {
+    margin: 0;
+}
+
+.reactifywp-bulk-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Empty State */
+.reactifywp-empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.reactifywp-empty-state .dashicons {
+    font-size: 64px;
+    color: #ccd0d4;
+    margin-bottom: 20px;
+}
+
+.reactifywp-empty-state h3 {
+    margin: 0 0 10px 0;
+    color: #23282d;
+}
+
+.reactifywp-empty-state p {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Projects Table */
+.reactifywp-projects-table-container {
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
+.reactifywp-projects-table-container table {
+    min-width: 1000px;
+}
+
+.reactifywp-projects-table-container th,
+.reactifywp-projects-table-container td {
+    padding: 12px 8px;
+    vertical-align: top;
+}
+
+.reactifywp-projects-table-container th:first-child,
+.reactifywp-projects-table-container td:first-child {
+    padding-left: 15px;
+}
+
+.reactifywp-projects-table-container th:last-child,
+.reactifywp-projects-table-container td:last-child {
+    padding-right: 15px;
+}
+
+/* Table Columns */
+.column-cb {
+    width: 40px;
+}
+
+.column-name {
+    width: 25%;
+}
+
+.column-slug {
+    width: 15%;
+}
+
+.column-shortcode {
+    width: 20%;
+}
+
+.column-status {
+    width: 10%;
+}
+
+.column-size {
+    width: 10%;
+}
+
+.column-version {
+    width: 10%;
+}
+
+.column-date {
+    width: 12%;
+}
+
+.column-actions {
+    width: 8%;
+}
+
+/* Sortable Headers */
+.manage-column.sortable a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: inherit;
+}
+
+.sorting-indicator {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 4px solid #ccc;
+    margin-left: 5px;
+    transition: all 0.2s ease;
+}
+
+.sorting-indicator.asc {
+    border-bottom-color: #0073aa;
+    transform: rotate(0deg);
+}
+
+.sorting-indicator.desc {
+    border-bottom-color: #0073aa;
+    transform: rotate(180deg);
+}
+
+/* Project Status */
+.reactifywp-status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.reactifywp-status-active {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.reactifywp-status-inactive {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.reactifywp-status-error {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+/* Shortcode Display */
+.reactifywp-shortcode-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.reactifywp-shortcode {
+    background: #f8f9fa;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #e83e8c;
+    border: 1px solid #e9ecef;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.reactifywp-copy-shortcode {
+    padding: 2px 6px;
+    font-size: 11px;
+    height: 24px;
+    line-height: 20px;
+    min-width: 24px;
+    border-radius: 3px;
+    background: #f6f7f7;
+    border: 1px solid #ddd;
+    color: #555;
+    transition: all 0.2s ease;
+}
+
+.reactifywp-copy-shortcode:hover {
+    background: #0073aa;
+    border-color: #0073aa;
+    color: #fff;
+}
+
+.reactifywp-copy-shortcode .dashicons {
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* Project Actions */
+.reactifywp-actions {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.reactifywp-actions .button {
+    padding: 4px 6px;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 3px;
+    background: #f6f7f7;
+    border: 1px solid #ddd;
+    color: #555;
+    transition: all 0.2s ease;
+}
+
+.reactifywp-actions .button:hover {
+    background: #0073aa;
+    border-color: #0073aa;
+    color: #fff;
+}
+
+.reactifywp-actions .button .dashicons {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.reactifywp-toggle-status[data-status="active"]:hover {
+    background: #dc3232;
+    border-color: #dc3232;
+}
+
+.reactifywp-toggle-status[data-status="inactive"]:hover,
+.reactifywp-toggle-status[data-status="error"]:hover {
+    background: #46b450;
+    border-color: #46b450;
+}
+
+/* Row Actions */
+.row-actions {
+    margin-top: 8px;
+    font-size: 12px;
+}
+
+.row-actions span {
+    color: #666;
+}
+
+.row-actions a {
+    color: #0073aa;
+    text-decoration: none;
+}
+
+.row-actions a:hover {
+    color: #005a87;
+}
+
+.row-actions .trash a {
+    color: #a00;
+}
+
+.row-actions .trash a:hover {
+    color: #dc3232;
+}
+
+/* Version Display */
+.reactifywp-version {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    background: #f1f1f1;
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    color: #555;
+}
+
+/* Shortcode Display */
+.reactifywp-projects-table-container code {
+    background: #f8f9fa;
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #e83e8c;
+    border: 1px solid #e9ecef;
+}
+
+/* Help Section */
+.reactifywp-help-content h3 {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    color: #23282d;
+}
+
+.reactifywp-help-content h3:first-child {
+    margin-top: 0;
+}
+
+.reactifywp-help-content ol,
+.reactifywp-help-content ul {
+    margin-left: 20px;
+}
+
+.reactifywp-help-content li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.reactifywp-help-content li strong {
+    color: #23282d;
+}
+
+.reactifywp-help-content li p {
+    margin: 5px 0 0 0;
+    color: #666;
+}
+
+.reactifywp-help-content pre {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    padding: 15px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.4;
+    margin: 15px 0;
+}
+
+.reactifywp-help-content code {
+    background: #f8f9fa;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 90%;
+    color: #e83e8c;
+    border: 1px solid #e9ecef;
+}
+
+.reactifywp-help-content pre code {
+    background: none;
+    padding: 0;
+    border: none;
+    color: #212529;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 782px) {
+    .reactifywp-admin-container {
+        margin: 0 -20px;
+    }
+    
+    .reactifywp-upload-section,
+    .reactifywp-projects-section,
+    .reactifywp-settings-section,
+    .reactifywp-help-section {
+        margin: 20px 0;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+    }
+    
+    #reactifywp-upload-form .form-table th,
+    #reactifywp-upload-form .form-table td {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+    }
+    
+    #reactifywp-upload-form .form-table th {
+        border-bottom: none;
+        padding-bottom: 5px;
+    }
+    
+    #reactifywp-upload-form .regular-text {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .reactifywp-projects-table-container {
+        margin: 0 -20px;
+    }
+    
+    .reactifywp-projects-table-container table {
+        font-size: 14px;
+    }
+    
+    .reactifywp-projects-table-container .button-small {
+        display: block;
+        margin: 2px 0;
+        text-align: center;
+    }
+}
+
+/* Loading States */
+.reactifywp-loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.reactifywp-loading .spinner {
+    visibility: visible;
+}
+
+/* Success/Error Messages */
+.reactifywp-notice {
+    margin: 15px 0;
+    padding: 12px;
+    border-left: 4px solid;
+    background: #fff;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.reactifywp-notice.notice-success {
+    border-left-color: #46b450;
+    background: #f7fcf0;
+}
+
+.reactifywp-notice.notice-error {
+    border-left-color: #dc3232;
+    background: #fef7f1;
+}
+
+.reactifywp-notice.notice-warning {
+    border-left-color: #ffb900;
+    background: #fff8e5;
+}
+
+.reactifywp-notice.notice-info {
+    border-left-color: #00a0d2;
+    background: #f0f8ff;
+}
+
+/* Form Validation */
+.reactifywp-field-error {
+    border-color: #dc3232 !important;
+    box-shadow: 0 0 2px rgba(220, 50, 50, 0.8);
+}
+
+.reactifywp-error-message {
+    color: #dc3232;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Drag and Drop Upload */
+.reactifywp-upload-dropzone {
+    border: 2px dashed #ccd0d4;
+    border-radius: 4px;
+    padding: 40px 20px;
+    text-align: center;
+    background: #fafafa;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.reactifywp-upload-dropzone:hover,
+.reactifywp-upload-dropzone.dragover {
+    border-color: #0073aa;
+    background: #f0f8ff;
+}
+
+.reactifywp-upload-dropzone .dashicons {
+    font-size: 48px;
+    color: #ccd0d4;
+    margin-bottom: 15px;
+}
+
+.reactifywp-upload-dropzone p {
+    margin: 0;
+    color: #666;
+}
+
+.reactifywp-upload-dropzone .upload-instructions {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.reactifywp-upload-dropzone .upload-note {
+    font-size: 14px;
+    color: #999;
+}
+
+/* Progress Bar */
+.reactifywp-progress {
+    width: 100%;
+    height: 20px;
+    background: #f1f1f1;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.reactifywp-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #0073aa, #005a87);
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 10px;
+}
+
+.reactifywp-progress-text {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}

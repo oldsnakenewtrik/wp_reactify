@@ -1,0 +1,89 @@
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+    level: 8
+    paths:
+        - reactifywp.php
+        - inc/
+    
+    # WordPress specific configuration
+    bootstrapFiles:
+        - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
+    
+    # Ignore WordPress globals and functions
+    ignoreErrors:
+        # WordPress globals
+        - '#Undefined variable: \$wpdb#'
+        - '#Undefined variable: \$wp_filesystem#'
+        - '#Undefined variable: \$current_user#'
+        
+        # WordPress functions that PHPStan doesn't understand
+        - '#Function wp_upload_dir not found#'
+        - '#Function get_current_blog_id not found#'
+        - '#Function is_multisite not found#'
+        - '#Function switch_to_blog not found#'
+        - '#Function restore_current_blog not found#'
+        - '#Function wp_mkdir_p not found#'
+        - '#Function plugin_dir_path not found#'
+        - '#Function plugin_dir_url not found#'
+        - '#Function plugin_basename not found#'
+        - '#Function add_action not found#'
+        - '#Function add_filter not found#'
+        - '#Function register_activation_hook not found#'
+        - '#Function register_deactivation_hook not found#'
+        - '#Function load_plugin_textdomain not found#'
+        - '#Function flush_rewrite_rules not found#'
+        - '#Function is_plugin_active_for_network not found#'
+        - '#Function add_option not found#'
+        - '#Function get_option not found#'
+        - '#Function update_option not found#'
+        - '#Function delete_option not found#'
+        - '#Function wp_enqueue_script not found#'
+        - '#Function wp_enqueue_style not found#'
+        - '#Function wp_localize_script not found#'
+        - '#Function wp_add_inline_script not found#'
+        - '#Function wp_add_inline_style not found#'
+        - '#Function add_shortcode not found#'
+        - '#Function shortcode_atts not found#'
+        - '#Function esc_attr not found#'
+        - '#Function esc_html not found#'
+        - '#Function esc_url not found#'
+        - '#Function sanitize_text_field not found#'
+        - '#Function sanitize_file_name not found#'
+        - '#Function wp_verify_nonce not found#'
+        - '#Function wp_create_nonce not found#'
+        - '#Function current_user_can not found#'
+        - '#Function wp_die not found#'
+        - '#Function wp_redirect not found#'
+        - '#Function admin_url not found#'
+        - '#Function wp_json_encode not found#'
+        - '#Function wp_parse_args not found#'
+        - '#Function trailingslashit not found#'
+        - '#Function untrailingslashit not found#'
+        
+        # WordPress classes
+        - '#Class WP_Error not found#'
+        - '#Class WP_Query not found#'
+        - '#Class WP_User not found#'
+        - '#Class WP_Post not found#'
+        - '#Class WP_REST_Request not found#'
+        - '#Class WP_REST_Response not found#'
+        - '#Class WP_CLI not found#'
+        - '#Class ZipArchive not found#'
+    
+    # Exclude test files and vendor
+    excludePaths:
+        - tests/
+        - vendor/
+    
+    # Check for missing typehints
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    
+    # WordPress specific settings
+    universalObjectCratesClasses:
+        - stdClass
+    
+    # Custom rules
+    reportUnmatchedIgnoredErrors: false

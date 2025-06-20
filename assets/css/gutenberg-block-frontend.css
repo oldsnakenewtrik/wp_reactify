@@ -1,0 +1,393 @@
+/**
+ * Gutenberg Block Frontend Styles for ReactifyWP
+ */
+
+/* Block Container */
+.wp-block-reactifywp-react-app {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+/* Alignment Classes */
+.wp-block-reactifywp-react-app.alignleft {
+    float: left;
+    margin: 0 2em 1em 0;
+    max-width: 50%;
+}
+
+.wp-block-reactifywp-react-app.alignright {
+    float: right;
+    margin: 0 0 1em 2em;
+    max-width: 50%;
+}
+
+.wp-block-reactifywp-react-app.aligncenter {
+    margin: 1em auto;
+    text-align: center;
+}
+
+.wp-block-reactifywp-react-app.alignwide {
+    width: 100%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wp-block-reactifywp-react-app.alignfull {
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+}
+
+/* React App Container */
+.wp-block-reactifywp-react-app .reactify-app-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Loading States */
+.wp-block-reactifywp-react-app .reactify-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    background: #f9f9f9;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+}
+
+.wp-block-reactifywp-react-app .reactify-loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e1e1e1;
+    border-top: 4px solid #0073aa;
+    border-radius: 50%;
+    animation: reactify-spin 1s linear infinite;
+}
+
+@keyframes reactify-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.wp-block-reactifywp-react-app .reactify-loading-text {
+    margin-left: 12px;
+    color: #50575e;
+    font-size: 14px;
+}
+
+/* Error States */
+.wp-block-reactifywp-react-app .reactify-error {
+    padding: 20px;
+    background: #fff5f5;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.wp-block-reactifywp-react-app .reactify-error-icon {
+    color: #d63638;
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.wp-block-reactifywp-react-app .reactify-error-message {
+    color: #721c24;
+    margin: 0 0 12px 0;
+    font-size: 16px;
+}
+
+.wp-block-reactifywp-react-app .reactify-error-details {
+    color: #856404;
+    font-size: 14px;
+    margin: 0;
+}
+
+.wp-block-reactifywp-react-app .reactify-retry-button {
+    background: #0073aa;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 12px;
+    transition: background-color 0.2s ease;
+}
+
+.wp-block-reactifywp-react-app .reactify-retry-button:hover {
+    background: #005a87;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .wp-block-reactifywp-react-app.alignleft,
+    .wp-block-reactifywp-react-app.alignright {
+        float: none;
+        margin: 1em 0;
+        max-width: 100%;
+    }
+    
+    .wp-block-reactifywp-react-app .reactify-loading {
+        min-height: 150px;
+    }
+    
+    .wp-block-reactifywp-react-app .reactify-loading-spinner {
+        width: 32px;
+        height: 32px;
+        border-width: 3px;
+    }
+    
+    .wp-block-reactifywp-react-app .reactify-loading-text {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .wp-block-reactifywp-react-app {
+        margin: 0.5em 0;
+    }
+    
+    .wp-block-reactifywp-react-app .reactify-error {
+        padding: 16px;
+    }
+    
+    .wp-block-reactifywp-react-app .reactify-error-message {
+        font-size: 14px;
+    }
+    
+    .wp-block-reactifywp-react-app .reactify-error-details {
+        font-size: 12px;
+    }
+}
+
+/* Theme Integration */
+.wp-block-reactifywp-react-app.theme-light {
+    background: #ffffff;
+    color: #1d2327;
+}
+
+.wp-block-reactifywp-react-app.theme-dark {
+    background: #1e1e1e;
+    color: #e4e6ea;
+}
+
+.wp-block-reactifywp-react-app.theme-dark .reactify-loading {
+    background: #2c3338;
+    border-color: #3c434a;
+}
+
+.wp-block-reactifywp-react-app.theme-dark .reactify-loading-text {
+    color: #a7aaad;
+}
+
+.wp-block-reactifywp-react-app.theme-dark .reactify-error {
+    background: #2c1810;
+    border-color: #8a2424;
+}
+
+.wp-block-reactifywp-react-app.theme-dark .reactify-error-message {
+    color: #f8d7da;
+}
+
+.wp-block-reactifywp-react-app.theme-dark .reactify-error-details {
+    color: #fff3cd;
+}
+
+/* Auto Theme (System Preference) */
+@media (prefers-color-scheme: dark) {
+    .wp-block-reactifywp-react-app.theme-auto {
+        background: #1e1e1e;
+        color: #e4e6ea;
+    }
+    
+    .wp-block-reactifywp-react-app.theme-auto .reactify-loading {
+        background: #2c3338;
+        border-color: #3c434a;
+    }
+    
+    .wp-block-reactifywp-react-app.theme-auto .reactify-loading-text {
+        color: #a7aaad;
+    }
+    
+    .wp-block-reactifywp-react-app.theme-auto .reactify-error {
+        background: #2c1810;
+        border-color: #8a2424;
+    }
+    
+    .wp-block-reactifywp-react-app.theme-auto .reactify-error-message {
+        color: #f8d7da;
+    }
+    
+    .wp-block-reactifywp-react-app.theme-auto .reactify-error-details {
+        color: #fff3cd;
+    }
+}
+
+/* Accessibility */
+.wp-block-reactifywp-react-app:focus-within {
+    outline: 2px solid #0073aa;
+    outline-offset: 2px;
+}
+
+.wp-block-reactifywp-react-app .reactify-retry-button:focus {
+    outline: 2px solid #0073aa;
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .wp-block-reactifywp-react-app .reactify-loading {
+        border-color: #000;
+        background: #fff;
+    }
+    
+    .wp-block-reactifywp-react-app .reactify-loading-spinner {
+        border-color: #ccc;
+        border-top-color: #000;
+    }
+    
+    .wp-block-reactifywp-react-app .reactify-error {
+        border-color: #000;
+        background: #fff;
+    }
+    
+    .wp-block-reactifywp-react-app .reactify-retry-button {
+        background: #000;
+        color: #fff;
+        border: 2px solid #000;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .wp-block-reactifywp-react-app .reactify-loading-spinner {
+        animation: none;
+    }
+    
+    .wp-block-reactifywp-react-app .reactify-retry-button {
+        transition: none;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .wp-block-reactifywp-react-app {
+        break-inside: avoid;
+    }
+    
+    .wp-block-reactifywp-react-app .reactify-loading,
+    .wp-block-reactifywp-react-app .reactify-error {
+        border: 1px solid #000;
+        background: #fff;
+    }
+    
+    .wp-block-reactifywp-react-app .reactify-loading-spinner {
+        display: none;
+    }
+    
+    .wp-block-reactifywp-react-app .reactify-retry-button {
+        display: none;
+    }
+}
+
+/* Custom Properties for Theme Integration */
+.wp-block-reactifywp-react-app {
+    --reactify-primary-color: #0073aa;
+    --reactify-secondary-color: #50575e;
+    --reactify-background-color: #ffffff;
+    --reactify-text-color: #1d2327;
+    --reactify-border-color: #e1e1e1;
+    --reactify-error-color: #d63638;
+    --reactify-success-color: #00a32a;
+    --reactify-warning-color: #dba617;
+}
+
+/* Container Queries (Future Enhancement) */
+@container (max-width: 600px) {
+    .wp-block-reactifywp-react-app .reactify-loading {
+        min-height: 120px;
+    }
+    
+    .wp-block-reactifywp-react-app .reactify-error {
+        padding: 12px;
+    }
+}
+
+/* Performance Optimizations */
+.wp-block-reactifywp-react-app {
+    contain: layout style;
+}
+
+.wp-block-reactifywp-react-app .reactify-app-container {
+    will-change: transform;
+}
+
+/* Lazy Loading Support */
+.wp-block-reactifywp-react-app[data-loading="lazy"] {
+    min-height: 200px;
+}
+
+.wp-block-reactifywp-react-app[data-loading="lazy"]:not(.loaded) {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: reactify-skeleton 1.5s infinite;
+}
+
+@keyframes reactify-skeleton {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Error Boundary Styles */
+.wp-block-reactifywp-react-app .reactify-error-boundary {
+    padding: 24px;
+    background: #fff5f5;
+    border: 2px solid #f5c6cb;
+    border-radius: 8px;
+    text-align: center;
+    margin: 16px 0;
+}
+
+.wp-block-reactifywp-react-app .reactify-error-boundary h3 {
+    color: #721c24;
+    margin: 0 0 12px 0;
+    font-size: 18px;
+}
+
+.wp-block-reactifywp-react-app .reactify-error-boundary p {
+    color: #856404;
+    margin: 0 0 16px 0;
+    font-size: 14px;
+}
+
+.wp-block-reactifywp-react-app .reactify-error-boundary details {
+    text-align: left;
+    margin: 16px 0;
+    padding: 12px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+.wp-block-reactifywp-react-app .reactify-error-boundary summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #495057;
+}
+
+.wp-block-reactifywp-react-app .reactify-error-boundary pre {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #6c757d;
+    margin: 8px 0 0 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
