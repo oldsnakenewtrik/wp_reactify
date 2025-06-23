@@ -30,9 +30,10 @@ echo "<h2>Test 2: Database Tables</h2>\n";
 global $wpdb;
 
 $tables = [
-    $wpdb->prefix . 'reactifywp_projects',
-    $wpdb->prefix . 'reactifywp_assets',
-    $wpdb->prefix . 'reactifywp_project_meta'
+    $wpdb->prefix . 'reactify_projects',
+    $wpdb->prefix . 'reactify_assets',
+    $wpdb->prefix . 'reactify_stats',
+    $wpdb->prefix . 'reactify_errors'
 ];
 
 foreach ($tables as $table) {

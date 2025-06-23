@@ -4,8 +4,10 @@
  * This script creates a ZIP file of the test React app for easy testing
  */
 
-// Only run if WordPress is loaded
-if (!defined('ABSPATH')) {
+// Check if we're in WordPress context
+$in_wordpress = defined('ABSPATH');
+
+if (!$in_wordpress) {
     // If not in WordPress, try to load it
     $wp_load_paths = [
         '../../../wp-load.php',
@@ -13,7 +15,7 @@ if (!defined('ABSPATH')) {
         '../wp-load.php',
         'wp-load.php'
     ];
-    
+
     $wp_loaded = false;
     foreach ($wp_load_paths as $path) {
         if (file_exists($path)) {
@@ -22,9 +24,16 @@ if (!defined('ABSPATH')) {
             break;
         }
     }
-    
+
     if (!$wp_loaded) {
-        die('WordPress not found. Please run this script from the WordPress root or plugin directory.');
+        // Run without WordPress for basic ZIP creation
+        echo "<h1>ReactifyWP Test ZIP Creator (Standalone Mode)</h1>\n";
+        echo "<p>⚠️ WordPress not detected. Running in standalone mode.</p>\n";
+    }
+} else {
+    // Only allow administrators to run this script in WordPress
+    if (!current_user_can('manage_options')) {
+        die('Insufficient permissions.');
     }
 }
 

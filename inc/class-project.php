@@ -171,6 +171,24 @@ class Project
     }
 
     /**
+     * Get all projects for current blog
+     *
+     * @return array Projects list
+     */
+    public function get_all()
+    {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'reactify_projects';
+        $blog_id = get_current_blog_id();
+
+        return $wpdb->get_results($wpdb->prepare(
+            "SELECT * FROM {$table_name} WHERE blog_id = %d ORDER BY created_at DESC",
+            $blog_id
+        ));
+    }
+
+    /**
      * Get project assets
      *
      * @param string $slug Project slug

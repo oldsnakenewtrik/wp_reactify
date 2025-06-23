@@ -51,7 +51,7 @@ class Shortcode
 
         // Validate required attributes
         if (empty($atts['slug'])) {
-            return $this->render_error(__('Project slug is required.', 'reactifywp'));
+            return $this->render_error(__('Project slug is required. Please specify a slug like: [reactify slug="my-app"]', 'reactifywp'));
         }
 
         $slug = sanitize_text_field($atts['slug']);
@@ -65,7 +65,9 @@ class Shortcode
         $project_data = $project->get_by_slug($slug);
 
         if (!$project_data) {
-            return $this->render_error(__('Project not found.', 'reactifywp'));
+            $admin_link = current_user_can('manage_options') ?
+                ' <a href="' . admin_url('admin.php?page=reactifywp') . '">Upload a project here</a>.' : '';
+            return $this->render_error(sprintf(__('Project "%s" not found.%s', 'reactifywp'), $slug, $admin_link));
         }
 
         // Check project status
@@ -712,10 +714,18 @@ class Shortcode
         }
 
         return sprintf(
-            '<div class="reactifywp-error" style="background: #f8d7da; color: #721c24; padding: 10px; border: 1px solid #f5c6cb; border-radius: 4px; margin: 10px 0;">
-                <strong>ReactifyWP Error:</strong> %s
+            '<div class="reactifywp-error" style="background: #f8d7da; color: #721c24; padding: 15px; border: 1px solid #f5c6cb; border-radius: 4px; margin: 10px 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+                <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                    <span style="font-size: 18px; margin-right: 8px;">⚠️</span>
+                    <strong>ReactifyWP Error</strong>
+                </div>
+                <div style="margin-bottom: 10px;">%s</div>
+                <div style="font-size: 12px; opacity: 0.8;">
+                    Need help? Check the <a href="https://github.com/oldsnakenewtrik/wp_reactify" target="_blank" style="color: #721c24;">documentation</a> or
+                    <a href="' . admin_url('admin.php?page=reactifywp') . '" style="color: #721c24;">manage your projects</a>.
+                </div>
             </div>',
-            esc_html($message)
+            $message // Note: $message may already contain HTML from sprintf calls above
         );
     }
 
