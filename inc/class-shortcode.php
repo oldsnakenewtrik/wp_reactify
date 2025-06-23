@@ -81,10 +81,15 @@ class Shortcode
         // Generate unique container ID
         $container_id = $this->generate_container_id($slug, $atts);
 
-        // Enqueue project assets based on loading strategy
-        $this->enqueue_project_assets($project_data, $atts);
+        // Try to enqueue project assets, but don't fail if it doesn't work
+        try {
+            $this->enqueue_project_assets($project_data, $atts);
+        } catch (Exception $e) {
+            // Log error but continue rendering
+            error_log('ReactifyWP: Asset loading failed for ' . $slug . ': ' . $e->getMessage());
+        }
 
-        // Generate container with enhanced features
+        // Always generate container - let frontend JavaScript handle the loading
         return $this->render_enhanced_container($slug, $project_data, $atts, $container_id);
     }
 
@@ -231,10 +236,19 @@ class Shortcode
      */
     private function enqueue_project_assets($project_data, $atts = [])
     {
-        $asset_manager = new AssetManager();
-        $assets = $asset_manager->get_project_assets($project_data->id);
+        // Try to load assets via AssetManager, but don't fail if it doesn't work
+        try {
+            $asset_manager = new AssetManager();
+            $assets = $asset_manager->get_project_assets($project_data->id);
+        } catch (Exception $e) {
+            error_log('ReactifyWP: AssetManager failed for project ' . $project_data->slug . ': ' . $e->getMessage());
+            $assets = [];
+        }
 
+        // If no assets found via AssetManager, that's OK - frontend JS will handle it
         if (empty($assets)) {
+            // Still add the mount script so frontend JavaScript can work
+            $this->add_enhanced_mount_script($project_data, $atts);
             return;
         }
 
