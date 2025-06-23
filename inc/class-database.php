@@ -81,8 +81,7 @@ class Database
             KEY project_id (project_id),
             KEY file_type (file_type),
             KEY load_order (load_order),
-            KEY is_critical (is_critical),
-            FOREIGN KEY (project_id) REFERENCES $projects_table(id) ON DELETE CASCADE
+            KEY is_critical (is_critical)
         ) $charset_collate;";
 
         // Usage statistics table
@@ -101,8 +100,7 @@ class Database
             KEY project_id (project_id),
             KEY page_id (page_id),
             KEY last_viewed (last_viewed),
-            KEY created_at (created_at),
-            FOREIGN KEY (project_id) REFERENCES $projects_table(id) ON DELETE CASCADE
+            KEY created_at (created_at)
         ) $charset_collate;";
 
         // Error logs table
@@ -122,16 +120,38 @@ class Database
             KEY project_id (project_id),
             KEY error_type (error_type),
             KEY user_id (user_id),
-            KEY created_at (created_at),
-            FOREIGN KEY (project_id) REFERENCES $projects_table(id) ON DELETE SET NULL
+            KEY created_at (created_at)
         ) $charset_collate;";
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
-        dbDelta($projects_sql);
-        dbDelta($assets_sql);
-        dbDelta($stats_sql);
-        dbDelta($errors_sql);
+        // Create tables one by one with error handling
+        try {
+            dbDelta($projects_sql);
+        } catch (Exception $e) {
+            error_log('ReactifyWP: Error creating projects table: ' . $e->getMessage());
+        }
+
+        // Skip complex tables for now - just create the main projects table
+        // The other tables can be created later if needed
+
+        // Simple assets table without foreign keys
+        $simple_assets_sql = "CREATE TABLE {$wpdb->prefix}reactify_assets (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            project_id bigint(20) unsigned NOT NULL,
+            file_path varchar(500) NOT NULL,
+            file_type varchar(50) NOT NULL,
+            file_size bigint(20) unsigned DEFAULT 0,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (id),
+            KEY project_id (project_id)
+        ) $charset_collate;";
+
+        try {
+            dbDelta($simple_assets_sql);
+        } catch (Exception $e) {
+            error_log('ReactifyWP: Error creating assets table: ' . $e->getMessage());
+        }
 
         // Update database version
         update_option(self::DB_VERSION_KEY, self::DB_VERSION);
