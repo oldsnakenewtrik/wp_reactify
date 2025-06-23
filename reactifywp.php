@@ -30,8 +30,27 @@ define('REACTIFYWP_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('REACTIFYWP_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('REACTIFYWP_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
-// Autoloader
-require_once REACTIFYWP_PLUGIN_DIR . 'vendor/autoload.php';
+// Autoloader - try Composer first, fallback to manual loading
+if (file_exists(REACTIFYWP_PLUGIN_DIR . 'vendor/autoload.php')) {
+    require_once REACTIFYWP_PLUGIN_DIR . 'vendor/autoload.php';
+} else {
+    // Manual class loading for production
+    spl_autoload_register(function ($class) {
+        // Only load ReactifyWP classes
+        if (strpos($class, 'ReactifyWP\\') !== 0) {
+            return;
+        }
+
+        // Convert class name to file path
+        $class_name = str_replace('ReactifyWP\\', '', $class);
+        $file_name = 'class-' . strtolower(str_replace('_', '-', preg_replace('/([a-z])([A-Z])/', '$1-$2', $class_name))) . '.php';
+        $file_path = REACTIFYWP_PLUGIN_DIR . 'inc/' . $file_name;
+
+        if (file_exists($file_path)) {
+            require_once $file_path;
+        }
+    });
+}
 
 /**
  * Main ReactifyWP Plugin Class
@@ -447,13 +466,13 @@ function reactifywp()
 }
 
 // Plugin activation hook
-register_activation_hook(__FILE__, ['ReactifyWP\ReactifyWP', 'activate']);
+register_activation_hook(__FILE__, ['ReactifyWP', 'activate']);
 
 // Plugin deactivation hook
-register_deactivation_hook(__FILE__, ['ReactifyWP\ReactifyWP', 'deactivate']);
+register_deactivation_hook(__FILE__, ['ReactifyWP', 'deactivate']);
 
 // Multisite new blog activation
-add_action('wpmu_new_blog', ['ReactifyWP\ReactifyWP', 'activate_new_site']);
+add_action('wpmu_new_blog', ['ReactifyWP', 'activate_new_site']);
 
 // Start the plugin
 reactifywp();
