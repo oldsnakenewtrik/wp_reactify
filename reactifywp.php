@@ -43,11 +43,25 @@ if (file_exists(REACTIFYWP_PLUGIN_DIR . 'vendor/autoload.php')) {
 
         // Convert class name to file path
         $class_name = str_replace('ReactifyWP\\', '', $class);
-        $file_name = 'class-' . strtolower(str_replace('_', '-', preg_replace('/([a-z])([A-Z])/', '$1-$2', $class_name))) . '.php';
-        $file_path = REACTIFYWP_PLUGIN_DIR . 'inc/' . $file_name;
 
-        if (file_exists($file_path)) {
-            require_once $file_path;
+        // Handle different naming patterns
+        $possible_files = [
+            'class-' . strtolower(str_replace('_', '-', preg_replace('/([a-z])([A-Z])/', '$1-$2', $class_name))) . '.php',
+            'class-' . strtolower($class_name) . '.php',
+            strtolower($class_name) . '.php'
+        ];
+
+        foreach ($possible_files as $file_name) {
+            $file_path = REACTIFYWP_PLUGIN_DIR . 'inc/' . $file_name;
+            if (file_exists($file_path)) {
+                require_once $file_path;
+                return;
+            }
+        }
+
+        // Log missing class for debugging
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log("ReactifyWP: Could not load class $class");
         }
     });
 }
@@ -247,50 +261,117 @@ class ReactifyWP
      */
     public function init()
     {
-        // Initialize core components
-        $this->database = new ReactifyWP\Database();
-        $this->settings = new ReactifyWP\Settings();
-        $this->asset_manager = new ReactifyWP\AssetManager();
-        $this->frontend_optimizer = new ReactifyWP\FrontendOptimizer();
+        // Initialize core components (only if classes exist)
+        $this->init_core_components();
 
-        // Initialize error handling first
-        $this->error_handler = new ReactifyWP\ErrorHandler();
-
-        // Initialize upload and validation components
-        $this->file_uploader = new ReactifyWP\FileUploader();
-        $this->security_validator = new ReactifyWP\SecurityValidator();
-        $this->zip_extractor = new ReactifyWP\ZipExtractor();
-        $this->file_manager = new ReactifyWP\FileManager();
-
-        // Initialize React integration
-        $this->react_integration = new ReactifyWP\ReactIntegration();
-
-        // Initialize page builder integrations
-        $this->page_builder_integration = new ReactifyWP\PageBuilderIntegration();
-
-        // Initialize performance optimization
-        $this->performance_optimizer = new ReactifyWP\PerformanceOptimizer();
-        $this->cdn_manager = new ReactifyWP\CDNManager();
-
-        // Initialize debugging and error handling
-        $this->debug_manager = new ReactifyWP\DebugManager();
-
-        $this->help_system = new ReactifyWP\HelpSystem();
-        $this->project_templates = new ReactifyWP\ProjectTemplates();
-        $this->admin = new ReactifyWP\Admin();
-        $this->project = new ReactifyWP\Project();
-        $this->shortcode = new ReactifyWP\Shortcode();
-
-        // Initialize CLI if WP-CLI is available
-        if (defined('WP_CLI') && WP_CLI) {
-            $this->cli = new ReactifyWP\CLI();
-        }
-
-        // Apply environment-specific settings
-        $this->settings->apply_environment_settings();
+        // Initialize optional components
+        $this->init_optional_components();
 
         // Initialize integrations
         $this->init_integrations();
+    }
+
+    /**
+     * Initialize core components that are required
+     */
+    private function init_core_components()
+    {
+        // Essential components
+        if (class_exists('ReactifyWP\Database')) {
+            $this->database = new ReactifyWP\Database();
+        }
+
+        if (class_exists('ReactifyWP\Settings')) {
+            $this->settings = new ReactifyWP\Settings();
+        }
+
+        if (class_exists('ReactifyWP\Admin')) {
+            $this->admin = new ReactifyWP\Admin();
+        }
+
+        if (class_exists('ReactifyWP\Project')) {
+            $this->project = new ReactifyWP\Project();
+        }
+
+        if (class_exists('ReactifyWP\Shortcode')) {
+            $this->shortcode = new ReactifyWP\Shortcode();
+        }
+
+        if (class_exists('ReactifyWP\ErrorHandler')) {
+            $this->error_handler = new ReactifyWP\ErrorHandler();
+        }
+    }
+
+    /**
+     * Initialize optional components
+     */
+    private function init_optional_components()
+    {
+        // Upload and file management
+        if (class_exists('ReactifyWP\FileUploader')) {
+            $this->file_uploader = new ReactifyWP\FileUploader();
+        }
+
+        if (class_exists('ReactifyWP\SecurityValidator')) {
+            $this->security_validator = new ReactifyWP\SecurityValidator();
+        }
+
+        if (class_exists('ReactifyWP\ZipExtractor')) {
+            $this->zip_extractor = new ReactifyWP\ZipExtractor();
+        }
+
+        // Asset management
+        if (class_exists('ReactifyWP\AssetManager')) {
+            $this->asset_manager = new ReactifyWP\AssetManager();
+        }
+
+        // Performance and optimization
+        if (class_exists('ReactifyWP\FrontendOptimizer')) {
+            $this->frontend_optimizer = new ReactifyWP\FrontendOptimizer();
+        }
+
+        if (class_exists('ReactifyWP\PerformanceOptimizer')) {
+            $this->performance_optimizer = new ReactifyWP\PerformanceOptimizer();
+        }
+
+        if (class_exists('ReactifyWP\CDNManager')) {
+            $this->cdn_manager = new ReactifyWP\CDNManager();
+        }
+
+        // Other optional components
+        if (class_exists('ReactifyWP\FileManager')) {
+            $this->file_manager = new ReactifyWP\FileManager();
+        }
+
+        if (class_exists('ReactifyWP\ReactIntegration')) {
+            $this->react_integration = new ReactifyWP\ReactIntegration();
+        }
+
+        if (class_exists('ReactifyWP\PageBuilderIntegration')) {
+            $this->page_builder_integration = new ReactifyWP\PageBuilderIntegration();
+        }
+
+        if (class_exists('ReactifyWP\DebugManager')) {
+            $this->debug_manager = new ReactifyWP\DebugManager();
+        }
+
+        if (class_exists('ReactifyWP\HelpSystem')) {
+            $this->help_system = new ReactifyWP\HelpSystem();
+        }
+
+        if (class_exists('ReactifyWP\ProjectTemplates')) {
+            $this->project_templates = new ReactifyWP\ProjectTemplates();
+        }
+
+        // Initialize CLI if WP-CLI is available
+        if (defined('WP_CLI') && WP_CLI && class_exists('ReactifyWP\CLI')) {
+            $this->cli = new ReactifyWP\CLI();
+        }
+
+        // Apply environment-specific settings if available
+        if ($this->settings && method_exists($this->settings, 'apply_environment_settings')) {
+            $this->settings->apply_environment_settings();
+        }
     }
 
     /**

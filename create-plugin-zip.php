@@ -52,6 +52,14 @@ $files_to_include = [
     'inc/class-zip-extractor.php' => 'reactifywp/inc/class-zip-extractor.php',
     'inc/class-security-validator.php' => 'reactifywp/inc/class-security-validator.php',
     'inc/class-error-handler.php' => 'reactifywp/inc/class-error-handler.php',
+    'inc/class-frontend-optimizer.php' => 'reactifywp/inc/class-frontend-optimizer.php',
+    'inc/class-file-manager.php' => 'reactifywp/inc/class-file-manager.php',
+    'inc/class-react-integration.php' => 'reactifywp/inc/class-react-integration.php',
+    'inc/class-page-builder-integration.php' => 'reactifywp/inc/class-page-builder-integration.php',
+    'inc/class-debug-manager.php' => 'reactifywp/inc/class-debug-manager.php',
+    'inc/class-help-system.php' => 'reactifywp/inc/class-help-system.php',
+    'inc/class-project-templates.php' => 'reactifywp/inc/class-project-templates.php',
+    'inc/class-cli.php' => 'reactifywp/inc/class-cli.php',
     
     // Frontend assets
     'assets/dist/frontend.js' => 'reactifywp/assets/dist/frontend.js',
