@@ -1,0 +1,116 @@
+/* SonderCare Bed Selector Styles */
+
+:root {
+  --color-navy-blue: #2B3A67;
+  --color-gold: #D4AF37;
+  --color-primary: #25385b;
+}
+
+/* Basic reset and layout */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Utility classes */
+.bg-navy-blue { background-color: var(--color-navy-blue); }
+.text-gold { color: var(--color-gold); }
+.text-white { color: white; }
+.text-center { text-align: center; }
+.font-bold { font-weight: bold; }
+.text-xl { font-size: 1.25rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-3xl { font-size: 1.875rem; }
+.text-4xl { font-size: 2.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.p-4 { padding: 1rem; }
+.p-5 { padding: 1.25rem; }
+.p-6 { padding: 1.5rem; }
+.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.rounded-lg { border-radius: 0.5rem; }
+.shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.w-full { width: 100%; }
+.max-w-3xl { max-width: 48rem; }
+.min-h-screen { min-height: 100vh; }
+.flex-grow { flex-grow: 1; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.border-8 { border-width: 8px; }
+.bg-white { background-color: white; }
+.text-base { font-size: 1rem; }
+.italic { font-style: italic; }
+.m-0 { margin: 0; }
+.right-24 { right: 6rem; }
+.top-1\/2 { top: 50%; }
+.transform { transform: translateY(-50%); }
+.h-14 { height: 3.5rem; }
+.-mt-2 { margin-top: -0.5rem; }
+
+/* Component styles */
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.border-primary {
+  border: 2px solid var(--color-primary);
+}
+
+.hover-border-primary:hover {
+  border-color: var(--color-primary);
+}
+
+/* Grid system */
+.grid { display: grid; }
+.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.gap-4 { gap: 1rem; }
+
+/* Responsive */
+@media (min-width: 768px) {
+  .md-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ReactifyWP Compatibility */
+.sondercare-app-wrapper {
+  all: revert;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.sondercare-app-wrapper * {
+  box-sizing: border-box;
+}

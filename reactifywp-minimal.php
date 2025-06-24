@@ -111,11 +111,15 @@ class ReactifyWP_Minimal
         if (isset($_POST['upload_project']) && wp_verify_nonce($_POST['_wpnonce'], 'upload_project')) {
             $this->handle_upload();
         }
-        
+
+        if (isset($_POST['delete_project']) && wp_verify_nonce($_POST['_wpnonce'], 'delete_project')) {
+            $this->handle_delete();
+        }
+
         ?>
         <div class="wrap">
             <h1>ReactifyWP - Minimal Version</h1>
-            
+
             <div class="notice notice-info">
                 <p><strong>This is a minimal version of ReactifyWP.</strong> It provides basic functionality for uploading and displaying React apps.</p>
             </div>
@@ -160,24 +164,36 @@ class ReactifyWP_Minimal
 
         $slug = sanitize_text_field($_POST['slug']);
         $project_name = sanitize_text_field($_POST['project_name']);
-        
+
+        // Check for duplicate slug
+        global $wpdb;
+        $existing = $wpdb->get_var($wpdb->prepare(
+            "SELECT COUNT(*) FROM {$wpdb->prefix}reactify_projects WHERE blog_id = %d AND slug = %s",
+            get_current_blog_id(),
+            $slug
+        ));
+
+        if ($existing > 0) {
+            echo '<div class="notice notice-error"><p><strong>Error:</strong> A project with slug "' . esc_html($slug) . '" already exists. Please choose a different slug.</p></div>';
+            return;
+        }
+
         // Extract ZIP
         $upload_dir = wp_upload_dir();
         $project_dir = $upload_dir['basedir'] . '/reactify-projects/' . get_current_blog_id() . '/' . $slug;
-        
+
         if (!wp_mkdir_p($project_dir)) {
             echo '<div class="notice notice-error"><p>Could not create project directory.</p></div>';
             return;
         }
-        
+
         $zip = new ZipArchive();
         if ($zip->open($_FILES['zip_file']['tmp_name']) === TRUE) {
             $zip->extractTo($project_dir);
             $zip->close();
-            
+
             // Save to database
-            global $wpdb;
-            $wpdb->insert(
+            $result = $wpdb->insert(
                 $wpdb->prefix . 'reactify_projects',
                 [
                     'blog_id' => get_current_blog_id(),
@@ -187,11 +203,68 @@ class ReactifyWP_Minimal
                     'status' => 'active'
                 ]
             );
-            
-            echo '<div class="notice notice-success"><p>Project uploaded successfully!</p></div>';
+
+            if ($result !== false) {
+                echo '<div class="notice notice-success"><p>Project uploaded successfully!</p></div>';
+            } else {
+                echo '<div class="notice notice-error"><p>Database error: Could not save project.</p></div>';
+            }
         } else {
             echo '<div class="notice notice-error"><p>Could not extract ZIP file.</p></div>';
         }
+    }
+
+    private function handle_delete()
+    {
+        $project_id = intval($_POST['project_id']);
+
+        global $wpdb;
+        $project = $wpdb->get_row($wpdb->prepare(
+            "SELECT * FROM {$wpdb->prefix}reactify_projects WHERE id = %d AND blog_id = %d",
+            $project_id,
+            get_current_blog_id()
+        ));
+
+        if (!$project) {
+            echo '<div class="notice notice-error"><p>Project not found.</p></div>';
+            return;
+        }
+
+        // Delete files
+        if (is_dir($project->file_path)) {
+            $this->delete_directory($project->file_path);
+        }
+
+        // Delete from database
+        $result = $wpdb->delete(
+            $wpdb->prefix . 'reactify_projects',
+            ['id' => $project_id, 'blog_id' => get_current_blog_id()],
+            ['%d', '%d']
+        );
+
+        if ($result !== false) {
+            echo '<div class="notice notice-success"><p>Project "' . esc_html($project->project_name) . '" deleted successfully!</p></div>';
+        } else {
+            echo '<div class="notice notice-error"><p>Could not delete project from database.</p></div>';
+        }
+    }
+
+    private function delete_directory($dir)
+    {
+        if (!is_dir($dir)) {
+            return false;
+        }
+
+        $files = array_diff(scandir($dir), array('.', '..'));
+        foreach ($files as $file) {
+            $path = $dir . '/' . $file;
+            if (is_dir($path)) {
+                $this->delete_directory($path);
+            } else {
+                unlink($path);
+            }
+        }
+        return rmdir($dir);
     }
 
     private function list_projects()
@@ -208,7 +281,7 @@ class ReactifyWP_Minimal
         }
         
         echo '<table class="wp-list-table widefat fixed striped">';
-        echo '<thead><tr><th>Name</th><th>Slug</th><th>Status</th><th>Created</th><th>Shortcode</th></tr></thead>';
+        echo '<thead><tr><th>Name</th><th>Slug</th><th>Status</th><th>Created</th><th>Shortcode</th><th>Actions</th></tr></thead>';
         echo '<tbody>';
         foreach ($projects as $project) {
             echo '<tr>';
@@ -217,6 +290,13 @@ class ReactifyWP_Minimal
             echo '<td>' . esc_html($project->status) . '</td>';
             echo '<td>' . esc_html($project->created_at) . '</td>';
             echo '<td><code>[reactify slug="' . esc_attr($project->slug) . '"]</code></td>';
+            echo '<td>';
+            echo '<form method="post" style="display: inline;" onsubmit="return confirm(\'Are you sure you want to delete this project?\');">';
+            wp_nonce_field('delete_project');
+            echo '<input type="hidden" name="project_id" value="' . esc_attr($project->id) . '" />';
+            echo '<input type="submit" name="delete_project" class="button button-small" value="Delete" style="background: #dc3232; color: white;" />';
+            echo '</form>';
+            echo '</td>';
             echo '</tr>';
         }
         echo '</tbody></table>';

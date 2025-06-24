@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Contained React App</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .app-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .header h1 {
+            color: #333;
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        
+        .header p {
+            color: #666;
+            margin: 0;
+        }
+        
+        .quiz-section {
+            margin-bottom: 2rem;
+        }
+        
+        .question {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .question h3 {
+            margin: 0 0 1rem 0;
+            color: #333;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .option {
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .option.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+        
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.2s;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .results {
+            text-align: center;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .results h2 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        
+        .score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const QuizApp = () => {
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [answers, setAnswers] = useState({});
+            const [showResults, setShowResults] = useState(false);
+
+            const questions = [
+                {
+                    id: 1,
+                    question: "What type of sleeper are you?",
+                    options: [
+                        "Side sleeper",
+                        "Back sleeper", 
+                        "Stomach sleeper",
+                        "Combination sleeper"
+                    ]
+                },
+                {
+                    id: 2,
+                    question: "How firm do you like your mattress?",
+                    options: [
+                        "Very soft",
+                        "Medium soft",
+                        "Medium firm",
+                        "Very firm"
+                    ]
+                },
+                {
+                    id: 3,
+                    question: "Do you sleep hot or cold?",
+                    options: [
+                        "I sleep very hot",
+                        "I sleep somewhat hot",
+                        "I sleep neutral",
+                        "I sleep cold"
+                    ]
+                }
+            ];
+
+            const handleAnswer = (questionId, answer) => {
+                setAnswers(prev => ({
+                    ...prev,
+                    [questionId]: answer
+                }));
+            };
+
+            const nextQuestion = () => {
+                if (currentQuestion < questions.length - 1) {
+                    setCurrentQuestion(prev => prev + 1);
+                } else {
+                    setShowResults(true);
+                }
+            };
+
+            const resetQuiz = () => {
+                setCurrentQuestion(0);
+                setAnswers({});
+                setShowResults(false);
+            };
+
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            const currentQ = questions[currentQuestion];
+            const hasAnswer = answers[currentQ?.id];
+
+            if (showResults) {
+                return (
+                    <div className="app-container">
+                        <div className="results">
+                            <h2>🎉 Quiz Complete!</h2>
+                            <div className="score">{Object.keys(answers).length}/{questions.length}</div>
+                            <p>Thank you for completing the sleep quiz!</p>
+                            <p>Based on your answers, we'll recommend the perfect mattress for you.</p>
+                            <button className="button" onClick={resetQuiz}>
+                                Take Quiz Again
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="app-container">
+                    <div className="header">
+                        <h1>🛏️ Sleep Quiz</h1>
+                        <p>Find your perfect mattress match</p>
+                    </div>
+
+                    <div className="progress-bar">
+                        <div className="progress-fill" style={{width: `${progress}%`}}></div>
+                    </div>
+
+                    <div className="quiz-section">
+                        <div className="question">
+                            <h3>Question {currentQuestion + 1} of {questions.length}</h3>
+                            <h3>{currentQ.question}</h3>
+                            <div className="options">
+                                {currentQ.options.map((option, index) => (
+                                    <div
+                                        key={index}
+                                        className={`option ${answers[currentQ.id] === option ? 'selected' : ''}`}
+                                        onClick={() => handleAnswer(currentQ.id, option)}
+                                    >
+                                        {option}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <button 
+                            className="button" 
+                            onClick={nextQuestion}
+                            disabled={!hasAnswer}
+                        >
+                            {currentQuestion === questions.length - 1 ? 'See Results' : 'Next Question'}
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<QuizApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>
